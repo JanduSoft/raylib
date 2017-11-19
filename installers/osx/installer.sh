@@ -15,6 +15,7 @@ RAYLIB_GIT_URL="https://github.com/raysan5/raylib"
 CURL="/usr/bin/curl"
 GIT="/usr/bin/git"
 INSTALL_DIR="$HOME/raylib"
+VSCODE_LINK="https://go.microsoft.com/fwlink/?LinkID=620882"
 
 
 
@@ -58,6 +59,29 @@ echo "Removing unneded files"
 rm -rf .git
 rm -f .gitignore
 rm -f .travis.yml
+
+## Ask for installing VSCode
+echo "############################################################"
+echo "Do you want to install VSCode with Raylib Integration? (y/n)"
+echo "############################################################"
+
+read answer
+
+if [ "$answer" == "y" ]; then
+  echo "Installing VSCode"
+  mkdir -p tools
+  cd tools
+  curl -L -o vscode.zip $VSCODE_LINK
+  unzip vscode.zip
+  osascript -e 'tell application "Finder"' -e "make new alias to file (posix file \"$INSTALL_DIR/tools/Visual Studio Code.app\") at desktop with properties {name:\"VSCode for Raylib\"}" -e 'end tell'
+  rm vscode.zip
+  cd ..
+
+  echo "Installation of VSCode DONE!"
+else
+  echo "Skiping VSCode Installation" 
+fi
+
 
 ## Return to current dir
 popd
